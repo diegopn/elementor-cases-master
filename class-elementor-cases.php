@@ -10,7 +10,7 @@
  * @license    https://opensource.org/licenses/GPL-3.0 GPL-3.0-only
  * @link       link(https://www.dootax.com.br,
  *             Build Custom Elementor Widgets)
- * @since      1.0.0
+ * @since      1.1.7
  * php version 7.3.9
  */
 
@@ -34,15 +34,15 @@ final class Elementor_Cases {
 	/**
 	 * Plugin Version
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @var string The plugin version.
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '1.1.7';
 
 	/**
 	 * Minimum Elementor Version
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @var string Minimum Elementor version required to run the plugin.
 	 */
 	const MINIMUM_ELEMENTOR_VERSION = '2.0.0';
@@ -50,7 +50,7 @@ final class Elementor_Cases {
 	/**
 	 * Minimum PHP Version
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @var string Minimum PHP version required to run the plugin.
 	 */
 	const MINIMUM_PHP_VERSION = '7.0';
@@ -58,7 +58,7 @@ final class Elementor_Cases {
 	/**
 	 * Constructor
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access public
 	 */
 	public function __construct() {
@@ -75,7 +75,7 @@ final class Elementor_Cases {
 	 * Load plugin localization files.
 	 * Fired by `init` action hook.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access public
 	 */
 	public function i18n() {
@@ -91,7 +91,7 @@ final class Elementor_Cases {
 	 *
 	 * Fired by `plugins_loaded` action hook.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access public
 	 */
 	public function init() {
@@ -123,7 +123,7 @@ final class Elementor_Cases {
 	 *
 	 * Warning when the site doesn't have Elementor installed or activated.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access public
 	 */
 	public function admin_notice_missing_main_plugin() {
@@ -150,7 +150,7 @@ final class Elementor_Cases {
 	 *
 	 * Warning when the site doesn't have a minimum required Elementor version.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access public
 	 */
 	public function admin_notice_minimum_elementor_version() {
@@ -178,7 +178,7 @@ final class Elementor_Cases {
 	 *
 	 * Warning when the site doesn't have a minimum required PHP version.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access public
 	 */
 	public function admin_notice_minimum_php_version() {

@@ -7,7 +7,7 @@
  * Plugin Name: Elementor Cases - Dootax
  * Description: Plug-in que encrementa a funcionalidade de cases no Elementor
  * Plugin URI:  https://www.dootax.com.br
- * Version:     1.0.0
+ * Version:     1.1.7
  * Author:      Diego Pereira do Nascimento
  * Author URI:  https://www.dootax.com.br
  * Text Domain: elementor-cases

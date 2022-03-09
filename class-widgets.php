@@ -10,7 +10,7 @@
  * @license    https://opensource.org/licenses/GPL-3.0 GPL-3.0-only
  * @link       link(https://www.dootax.com.br,
  *             Build Custom Elementor Widgets)
- * @since      1.0.0
+ * @since      1.1.7
  * php version 7.3.9
  */
 
@@ -24,14 +24,14 @@ defined( 'ABSPATH' ) || die();
  *
  * Main Plugin class
  *
- * @since 1.0.0
+ * @since 1.1.7
  */
 class Widgets {
 
 	/**
 	 * Instance
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access private
 	 * @static
 	 *
@@ -44,7 +44,7 @@ class Widgets {
 	 *
 	 * Ensures only one instance of the class is loaded or can be loaded.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access public
 	 *
 	 * @return Plugin An instance of the class.
@@ -62,7 +62,7 @@ class Widgets {
 	 *
 	 * Load widgets files
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access private
 	 */
 	private function include_widgets_files() {
@@ -74,7 +74,7 @@ class Widgets {
 	 *
 	 * Register new Elementor widgets.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access public
 	 */
 	public function register_widgets() {
@@ -90,7 +90,7 @@ class Widgets {
 	 *
 	 * Register plugin action hooks and filters
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 * @access public
 	 */
 	public function __construct() {

@@ -10,7 +10,7 @@
  * @license    https://opensource.org/licenses/GPL-3.0 GPL-3.0-only
  * @link       link(https://www.dootax.com.br,
  *             Build Custom Elementor Widgets)
- * @since      1.0.0
+ * @since      1.1.7
  * php version 7.3.9
  */
 
@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || die();
 /**
  * Cases widget class.
  *
- * @since 1.0.0
+ * @since 1.1.7
  */
 class Cases extends Widget_Base {
 	/**
@@ -36,20 +36,15 @@ class Cases extends Widget_Base {
 	 */
 	public function __construct( $data = array(), $args = null ) {
 		parent::__construct( $data, $args );
-        
-		wp_register_style( 'style-cases',   plugins_url( '/assets/css/cases.css',            ELEMENTOR_CASES ), [], '1.0.0' );
-		wp_register_style( 'style-lity',    plugins_url( '/assets/css/lity.min.css',         ELEMENTOR_CASES ), [], '1.0.0' );
-		wp_register_style( 'style-owl',     plugins_url( '/assets/css/owl.carousel.min.css', ELEMENTOR_CASES ), [], '1.0.0' );
 		
-		wp_register_script( 'script-cases', plugins_url( '/assets/js/cases.js',              ELEMENTOR_CASES ), [ 'elementor-frontend' ], '1.0.0', true );
-		wp_register_script( 'script-lity',  plugins_url( '/assets/js/lity.min.js',           ELEMENTOR_CASES ), [ 'elementor-frontend' ], '1.0.0', true );
-		wp_register_script( 'script-owl',   plugins_url( '/assets/js/owl.carousel.min.js',   ELEMENTOR_CASES ), [ 'elementor-frontend' ], '1.0.0', true );
+		wp_register_style(  'style-cases',  plugins_url( '/assets/cases.css',	ELEMENTOR_CASES ), [], '1.1.7' );
+		wp_register_script( 'script-cases',	plugins_url( '/assets/cases.js',	ELEMENTOR_CASES ), [ 'elementor-frontend' ], '1.1.7', true );
 	}
 
 	/**
 	 * Retrieve the widget name.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 *
 	 * @access public
 	 *
@@ -62,7 +57,7 @@ class Cases extends Widget_Base {
 	/**
 	 * Retrieve the widget title.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 *
 	 * @access public
 	 *
@@ -75,7 +70,7 @@ class Cases extends Widget_Base {
 	/**
 	 * Retrieve the widget icon.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 *
 	 * @access public
 	 *
@@ -93,7 +88,7 @@ class Cases extends Widget_Base {
 	 * Note that currently Elementor supports only one category.
 	 * When multiple categories passed, Elementor uses the first one.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 *
 	 * @access public
 	 *
@@ -107,22 +102,14 @@ class Cases extends Widget_Base {
 	 * Enqueue styles.
 	 */
 	public function get_style_depends() {
-		return [
-		    'style-cases',
-		    'style-lity',
-		    'style-owl'
-        ];
+		return [ 'style-cases' ];
 	}
 	
 	/**
 	 * Enqueue scripts.
 	 */
 	public function get_script_depends() {
-		return [
-		    'script-cases',
-		    'script-lity',
-		    'script-owl'
-        ];
+		return [ 'script-cases' ];
 	}
 
 	/**
@@ -130,7 +117,7 @@ class Cases extends Widget_Base {
 	 *
 	 * Adds different input fields to allow the user to change and customize the widget settings.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 *
 	 * @access protected
 	 */
@@ -140,6 +127,32 @@ class Cases extends Widget_Base {
 			[
 				'label' => __( 'Cases', 'elementor-cases' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'autoplay',
+			[
+				'label'		=> __( 'Autoplay', 'elementor-cases-carousel' ),
+				'type'		=> Controls_Manager::SELECT,
+				'options'	=> [
+					'default'	=> __( 'Padrão', 'elementor-cases-carousel' ),
+					'true'		=> __( 'Sim', 	 'elementor-cases-carousel' ),
+					'false'		=> __( 'Não', 	 'elementor-cases-carousel' )
+				],
+				'default'	=> 'true',
+			]
+		);
+
+		$this->add_control(
+			'speed',
+			[
+				'label'		=> __( 'Tempo de transição', 'elementor-cases-carousel' ),
+				'type'		=> Controls_Manager::NUMBER,
+				'min'		=> 500,
+				'max'		=> 15000,
+				'step'		=> 500,
+				'default'	=> 2500
 			]
 		);
 		
@@ -169,7 +182,8 @@ class Cases extends Widget_Base {
 				'type'    => Controls_Manager::TEXT,
 			]
 		);
-
+		
+		
         $repeater->add_control(
 			'testimonial',
 			[
@@ -177,7 +191,15 @@ class Cases extends Widget_Base {
 				'type'    => Controls_Manager::TEXTAREA,
 			]
 		);
-
+		
+        $repeater->add_control(
+			'tags',
+			[
+				'label'       => __( 'Tags', 'elementor-cases-carousel' ),
+				'placeholder' => __( 'Tag A, Tag B, Tag C ...', 'elementor-cases-carousel' ),
+				'type'        => Controls_Manager::TEXT,
+			]
+		);
         
         $repeater->add_control(
 			'url_video',
@@ -237,7 +259,7 @@ class Cases extends Widget_Base {
 	 *
 	 * Written in PHP and used to generate the final HTML.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.7
 	 *
 	 * @access protected
 	 */
@@ -245,70 +267,69 @@ class Cases extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 		
 		if ( $settings['list'] ) {
-?>
-            <div class="box-case loop owl-carousel owl-theme owl-loaded owl-drag">
 
-    			<?php foreach (  $settings['list'] as $item ) { ?>
+			$print_cases = '';
 
-    			    <div class="item-case">
-                        <div class="box-img">
-                            <span class="soluction"><?=$item["soluction"];?></span>
-                            <img src="<?=$item["image_testimonial"]['url'];?>" alt="<?=$item["name"];?>" class="img-testimonial" />
-                            <a href="<?=$item["url_video"];?>" data-lity>
-                                <img src="<?=plugin_dir_url( __DIR__ );?>/assets/img/icon_play_case.svg" alt="Icon - Play" class="icon-play" />
-                            </a>
-                        </div>
-                        <div class="box-content">
-                            <h4 class="name"><?=$item["name"];?></h4>
-                            <span class="job_title"><?=$item["job_title"];?></span>
-                            <p class="testimonial"><?=$item["testimonial"];?></p>
-                        </div>
-                    </div>
-
-                <?php } ?>
-
-            </div>
-<?php
-		}
-	}
-
-	/**
-	 * Render the widget output in the editor.
-	 *
-	 * Written as a Backbone JavaScript template and used to generate the live preview.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @access protected
-	 */
-	protected function _content_template() {
-?>
-		<# if ( settings.list ) { #>
-		
-		    <div class="box-case loop owl-carousel owl-theme owl-loaded owl-drag">
+		    foreach (  $settings['list'] as $item ) {
 		        
-    			<# _.each( settings.list, function( item, index ) { #>
-    			
-    			    <div class="item-case">
-                        <div class="box-img">
-                            <span class="soluction">{{{ item.soluction }}}</span>
-                            <img src="{{{ item.image_testimonial.url }}}" alt="{{{ item.name }}}" class="img-testimonial" />
-                            <a href="{{{ item.url_video }}}" data-lity>
-                                <img src="<?=plugin_dir_url( __DIR__ );?>/assets/img/icon_play_case.svg" alt="Icon - Play" class="icon-play" />
-                            </a>
-                        </div>
-                        <div class="box-content">
-                            <h4 class="name">{{{ item.name }}}</h4>
-                            <span class="job_title">{{{ item.job_title }}}</span>
-                            <p class="testimonial">{{{ item.testimonial }}}</p>
-                        </div>
-                    </div>
+		        $tags = "";
+		        
+		        foreach ( explode( "," , $item["tags"] ) as $item_tag )
+                    $tags .= "<li>" . $item_tag . "</li>";
+                
+                
+		        $print_cases .= "<div class='item-case'>
+                                    <div class='box-img'>
+                                        <span class='soluction'>" . $item["soluction"] . "</span>
+                                        <img src='" . $item["image_testimonial"]["url"] . "' alt='" . $item["name"] . "' class='img-testimonial' />
+                                        <a href='" . $item["url_video"] . "' data-lity>
+                                            <img src='" . plugin_dir_url( __DIR__ ) . "/assets/img/icon_play_case.svg' alt='Icon - Play' class='icon-play' />
+                                        </a>
+                                        <ul class='list_tags'>" . $tags . "</ul>
+                                    </div>
+                                    <div class='box-content'>
+                                        <h4 class='name'>" . $item["name"] . "</h4>
+                                        <span class='job_title'>" . $item["job_title"] . "</span>
+                                        <p class='testimonial'>" . $item["testimonial"] . "</p>
+                                    </div>
+                                </div>";
+		    }
+?>
+			<style>
+			@font-face{
+				font-family : slick;
+				font-weight : 400;
+				font-style	: normal;
+				src			: url('<?=plugin_dir_url( __DIR__ );?>assets/fonts/slick.eot');
+				src			: url('<?=plugin_dir_url( __DIR__ );?>assets/fonts//slick.eot?#iefix') format('embedded-opentype'),
+							  url('<?=plugin_dir_url( __DIR__ );?>assets/fonts/slick.woff') format('woff'),
+							  url('<?=plugin_dir_url( __DIR__ );?>assets/fonts/slick.ttf') format('truetype'),
+							  url('<?=plugin_dir_url( __DIR__ );?>assets/fonts/slick.svg#slick') format('svg');
+			}
+			</style>
 
-    			<# } );#> 
-			
+			<div class="box-cases">
+				<?php echo $print_cases . $print_cases; ?>
 			</div>
 
-		<# } #>
+			<script>
+				$(document).ready(function(){
+					$(".box-cases").slick({
+						autoplay		: <?=$settings["autoplay"];?>,
+						autoplaySpeed	: <?=$settings["speed"];?>,
+						infinite        : true,
+						arrows          : true,
+						centerMode		: true,
+						slidesToShow	: 3,
+						centerPadding	: "5px",
+						responsive		: [
+							{ breakpoint	: 768, settings	: { centerPadding: '20px', slidesToShow: 1 } }
+						]
+					});
+				});
+			</script>
+
 <?php
+		}
 	}
 }
